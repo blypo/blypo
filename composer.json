@@ -1,25 +1,25 @@
 {
-        "name": "Blypo",
-        "type": "typo3-cms-extension",
-        "description": "Blypo is a extension to replace fluid with laravels blade template engine.",
-        "homepage": "http://www.blypo.net",
-        "license": ["GPL-2.0+"],
-        "version": "0.0.1",
-        "repositories": [
-	        {
-	        	"type": "git",
-	        	"url": "https://github.com/blypo/view"
-	        }
-        ],
-        "require": {
-        	"philo/laravel-blade": "3.*",
-            "danielstjules/stringy": "~2.3",
-            "intervention/image": "2.*",
-            "illuminate/view": "dev-blypo as 5.2.x-dev"
-        },
-        "autoload": {
-            "psr-4": {
-                "AuM\\Blypo\\": "Classes"
-            }
-    	}
+	"name": "blypo/blypo",
+	"type": "typo3-cms-extension",
+	"description": "Blypo is a extension to replace fluid with laravels blade template engine.",
+	"homepage": "http://www.blypo.net",
+	"license": ["GPL-2.0+"],
+	"version": "0.0.1",
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/blypo/view"
+		}
+	],
+	"require": {
+		"philo/laravel-blade": "3.*",
+		"danielstjules/stringy": "~2.3",
+		"intervention/image": "2.*",
+		"illuminate/view": "dev-blypo as 5.2.x-dev"
+	},
+	"autoload": {
+		"psr-4": {
+			"AuM\\Blypo\\": "Classes"
+		}
+	}
 }
