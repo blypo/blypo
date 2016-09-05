@@ -7,10 +7,11 @@
 	"version": "1.0.0",
 	"repositories": [
 		{
-			"type": "vcs",
+			"type": "git",
 			"url": "https://github.com/blypo/view"
 		}
 	],
+	"minimum-stability": "dev",
 	"require": {
 		"philo/laravel-blade": "3.*",
 		"danielstjules/stringy": "~2.3",
