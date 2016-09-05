@@ -7,7 +7,7 @@ This is the recommended way to install blypo. First, install composer on your sy
 cd typo3conf/ext
 mkdir blypo
 cd blypo
-composer install blypo
+composer require blypo/blypo
 ```
 ### Clone from Github
 You can also clone blypo from github directly, but be aware that this also requires a working composer installation. Run the following commands, then install through the extension manager
