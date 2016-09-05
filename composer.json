@@ -7,7 +7,7 @@
 	"version": "1.0.0",
 	"repositories": [
 		{
-			"type": "git",
+			"type": "vcs",
 			"url": "https://github.com/blypo/view"
 		}
 	],
