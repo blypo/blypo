@@ -12,5 +12,12 @@ git clone https://github.com/blypo/blypo .
 composer install
 ```
 
+### Download Release/Zip
+* Download the latest release from [here](https://github.com/blypo/blypo/archive/master.zip)
+* Create a folder named `blypo` in `typo3conf/ext`.
+* unzip release to this folder
+* `composer install`
+* install through the TYPO3 extension manager
+
 ### TER
 Blypo will not be published on the TER, as Blypo relies heavily on composer features.
