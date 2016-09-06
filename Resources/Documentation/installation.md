@@ -1,7 +1,8 @@
 # Installation
+Be aware that this requires a working [composer](https://getcomposer.org/) installation!
 
 ### Clone from Github
-You can also clone blypo from github directly, but be aware that this also requires a working composer installation. Run the following commands, then install through the extension manager
+Run the following commands, then install through the TYPO3 extension manager
 
 ```bash
 cd typo3conf/ext
