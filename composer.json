@@ -4,7 +4,6 @@
 	"description": "Blypo is a extension to replace fluid with laravels blade template engine.",
 	"homepage": "http://www.blypo.net",
 	"license": ["GPL-2.0+"],
-	"version": "1.0.0",
 	"repositories": [
 		{
 			"type": "git",
