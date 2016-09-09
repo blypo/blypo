@@ -12,7 +12,7 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 		$itemsPerPage = isset($this->arguments['perPage']) ? $this->arguments['perPage'] : 10;
 		$page = isset($_GET['page']) ? (int) $_GET['page'] : 0;
 		$range = isset($this->arguments['range']) ? $this->arguments['range']: 4;
-		$this->linkParams = isset($this->arguments['params']) ? $this->arguments['params'] : '';
+		$this->linkParams = isset($this->arguments['params']) ? $this->arguments['params'] : false;
 		$wrapper = isset($this->arguments['wrapper']) ? $this->arguments['wrapper'] : 'ul';
 		$itemTag = isset($this->arguments['itemTag']) ? $this->arguments['itemTag'] : 'li';
 		$this->pageUid = isset($this->arguements['pageUid']) ?  $this->arguements['pageUid'] : $GLOBALS['TSFE']->id;
@@ -21,6 +21,9 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 	
 	public function makePagination($total, $itemsPerPage, $page, $range, $wrapper, $itemTag){
 		$pages = ceil($total/$itemsPerPage);
+		if($pages == 0 || $pages == 1){
+			return '';
+		}
 		$output = [];
 		// Prev/First Links
 		if($page > 0){
@@ -120,10 +123,14 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 		if(!static::$cObj){
 			static::$cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
         }
-		
+		if($this->linkParams) {
+			$linkparams = '&'.http_build_query($this->linkParams,'&');
+		} else {
+			$linkparams = '';
+		}
 		$url = static::$cObj->typoLink_URL([
 			'parameter' => $this->pageUid, 
-			'additionalParams' => '&page='.$page.$this->linkParams
+			'additionalParams' => '&page='.$page.$linkparams
 		]);
 		return $url;
 	}

@@ -281,7 +281,7 @@ viewhelper where a pagination feels best for you!
 |Name|Type|Description|
 |---|---|
 |itemTag|string|Default: li, the tag in which each item is rendered|
-|params|string|Parameter which should be added to typolink (eg. &newsaction=List)|
+|params|array|Parameter which should be added to typolink (eg. ['newsaction'=>'List'])|
 |perPage|integer|Default: 10, how many items per Page|
 |range|integer|Default: 4, how many pages should be visible at once.|
 |wrapper|string|Default: ul, the tag which wraps the items|
