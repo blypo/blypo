@@ -2,11 +2,11 @@
 namespace AuM\Blypo\ViewHelper;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
-	
+
 	public $linkParams;
 	public $pageUid;
 	public static $cObj = false;
-	
+
 	public function render(){
 		$total = $this->arguments['total'];
 		$itemsPerPage = isset($this->arguments['perPage']) ? $this->arguments['perPage'] : 10;
@@ -18,7 +18,7 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 		$this->pageUid = isset($this->arguements['pageUid']) ?  $this->arguements['pageUid'] : $GLOBALS['TSFE']->id;
 		echo $this->makePagination($total, $itemsPerPage, $page, $range, $wrapper, $itemTag);
 	}
-	
+
 	public function makePagination($total, $itemsPerPage, $page, $range, $wrapper, $itemTag){
 		$pages = ceil($total/$itemsPerPage);
 		if($pages == 0 || $pages == 1){
@@ -91,7 +91,7 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 				];
 			}
 		}
-		
+
 		// Next/Last Links
 		if($page < $pages -1){
 			$output[] = [
@@ -129,7 +129,7 @@ Class Pagination extends \AuM\Blypo\ViewHelper\ViewHelper{
 			$linkparams = '';
 		}
 		$url = static::$cObj->typoLink_URL([
-			'parameter' => $this->pageUid, 
+			'parameter' => $this->pageUid,
 			'additionalParams' => '&page='.$page.$linkparams
 		]);
 		return $url;

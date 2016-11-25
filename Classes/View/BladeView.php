@@ -12,16 +12,16 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Philo\Blade\Blade;
 
 class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
-	
+
 	public $cachePath = 'typo3temp/Blypo';
 	public $viewPath;
 	public $fileName;
 	public $filePath;
 	public $templateData = [];
 	public $controllerContext;
-	public $blade;
-	
-	
+	private $blade;
+
+
 	public function __construct(){
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         /** @var ConfigurationManagerInterface $configurationManager */
@@ -45,7 +45,7 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
         $controllerContext->setUriBuilder($uriBuilder);
         $this->setControllerContext($controllerContext);
     }
-	
+
 	/**
      * Injects a fresh rendering context
      *
@@ -57,7 +57,7 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
         $this->renderingContext = $renderingContext;
         $this->controllerContext = $renderingContext->getControllerContext();
     }
-	
+
 	public function assign($key,$value){
 		if ( is_array($value) ) {
 			if ( !isset($this->templateData[$key]) ) {
@@ -71,51 +71,56 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
 			$this->templateData[$key] = $value;
 			$this->templateData['_all'][$key] = $value;
 	}
-	
+
 	public function assignMultiple(array $values){
 		foreach($values as $key=>$value){
 			$this->assign($key,$value);		}
 	}
-	
+
 	public function setControllerContext(\TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext $controllerContext){
 		$this->controllerContext = $controllerContext;
 		$this->renderingContext->setControllerContext($controllerContext);
 	}
-	
+
 	public function canRender(\TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext $controllerContext){
 		//TODO really check
 		return true;
 	}
-	
+
+	public function setBlade($blade){
+		$this->blade = $blade;
+	}
+
+
 	public function setViewPath($path){
 		$this->viewPath = $path;
 	}
-	
+
 	public function setFileName($name){
 		$this->fileName = $name;
 	}
-	
+
 	public function setFilePath($path){
 		$this->filePath = $path;
 	}
-	
+
 	public function initializeView(){
 		$this->blade = new Blade(GeneralUtility::getFileAbsFileName($this->viewPath),GeneralUtility::getFileAbsFileName($this->cachePath));
-    	$this->setDirectives();
+		$this->setDirectives();
 	}
-	
+
 	public function setDirectives(){
 		\AuM\Blypo\ViewHelper\ViewHelper::setRenderContext($this->renderingContext);
 		\AuM\Blypo\ViewHelper\ViewHelper::setControllerContext($this->controllerContext);
 		$compiler = $this->blade->getCompiler();
-		
+
 		// add default namespace directive
 		$compiler->directive('namespace', function($expression){
 			$expression = explode(',',trim($expression,'()'));
 			$className = $expression[1];
 			$internalClassName = $className . '_' . str_shuffle(md5(rand(0,65536)));
 			$namespace = addslashes($expression[0]);
-			return '<?php 
+			return '<?php
 			    if(class_exists("'.$className.'") && '.$className.'::$targetNamespace !== "'.$namespace.'") {
 					throw new \Exception("Alias \"'.$className.'\" is already defined and uses  \"".'.$className.'::$targetNamespace."\" as its target namespace", 1);
 			    }
@@ -129,7 +134,7 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
 			    }
 			?>';
 		});
-		
+
 		// Directives Hook
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['blypo']['addDirective'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['blypo']['addDirective'] as $key => $classRef) {
@@ -143,7 +148,7 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
 
 					if(!is_subclass_of($classRef, \AuM\Blypo\Directive\Directive::class)){
 						throw new \Exception("directive \"".$classRef."\" must extend \AuM\Blypo\Directive\Directive", 1);
-					}					
+					}
 
 					$hookObject = GeneralUtility::makeInstance($classRef);
 					if($hookObject){
@@ -155,10 +160,10 @@ class BladeView implements \TYPO3\CMS\Extbase\Mvc\View\ViewInterface{
             }
         }
 	}
-	
+
 	public function render(){
 		$file = $this->filePath.'.'.$this->fileName;
 		return $this->blade->view()->make($file,$this->templateData)->render();
 	}
-	 
+
 }
