@@ -14,7 +14,7 @@
 	"require": {
 		"philo/laravel-blade": "3.*",
 		"danielstjules/stringy": "~2.3",
-		"illuminate/view": "dev-blypo as 5.2.x-dev"
+		"illuminate/view": "5.2"
 	},
 	"autoload": {
 		"psr-4": {
